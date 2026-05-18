@@ -1,20 +1,20 @@
 ---
-name: "Skrill" 
-rating: "4.5" 
-verdict: "Skrill is a highly reliable and convenient payment gateway that provides a secure and efficient way to send and receive money globally." 
-logo: "S" 
- pros: 
-   - "Wide global reach with support for over 40 currencies and 100 local payment methods." 
-   - "Instant money transfers with competitive exchange rates." 
-   - "Advanced security features like two-factor authentication and buyer protection." 
- cons: 
-   - "Higher fees compared to some other payment gateways." 
-   - "Limited customer support options." 
- fees: "Varies depending on the transaction type, starting from 1.45% for international transfers." 
- affiliateLink: "https://example.com/affiliate" 
- bonus: "Get $10 bonus when you sign up and make your first money transfer." 
- language: "en" 
- seoTitle: "Skrill Review 2026 | Is it safe or a scam?"
+name: "Skrill"
+rating: "4.5"
+verdict: "Skrill is a highly reliable and convenient payment gateway that provides a secure and efficient way to send and receive money globally."
+logo: "S"
+pros:
+  - "Wide global reach with support for over 40 currencies and 100 local payment methods."
+  - "Instant money transfers with competitive exchange rates."
+  - "Advanced security features like two-factor authentication and buyer protection."
+cons:
+  - "Higher fees compared to some other payment gateways."
+  - "Limited customer support options."
+fees: "Varies depending on the transaction type, starting from 1.45% for international transfers."
+affiliateLink: "https://example.com/affiliate"
+bonus: "Get $10 bonus when you sign up and make your first money transfer."
+language: "en"
+seoTitle: "Skrill Review 2026 | Is it safe or a scam?"
 ---
 
 ## Full Review of Skrill  
