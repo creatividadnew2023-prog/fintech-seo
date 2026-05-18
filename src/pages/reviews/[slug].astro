@@ -1,6 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
   // Obtenemos todos los archivos markdown de la carpeta src/content/reviews
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 
   return englishReviews.map((review) => {
     // Si el archivo es "revolut-en.md", le quitamos el "-en" para que la URL sea solo "/reviews/revolut"
-    const cleanSlug = review.slug.replace('-en', '');
+    const cleanSlug = review.id.replace('-en', '');
     
     return {
       params: { slug: cleanSlug },
@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 const { review, cleanSlug } = Astro.props;
-const { Content } = await review.render();
+const { Content } = await render(review);
 const product = review.data;
 ---
 
