@@ -15,6 +15,7 @@ affiliateLink: "https://ejemplo.com/afiliado"
 bonus: "Abre una cuenta y realiza tu primera transacción para recibir $10 en Bitcoin"
 language: "es"
 seoTitle: "Reseña de Kraken 2026 | ¿Vale la pena?"
+---
 
 ## Reseña Completa de Kraken
 

@@ -4,16 +4,15 @@ rating: "4.9"
 verdict: "Ideal para inversores noveles y traders que buscan una experiencia de inversión sin complicaciones"
 logo: "R"
 pros:  
-"Interfaz intuitiva y fácil de usar" 
-"Comisiones cero en compras de acciones, ETFs y criptos"
+  - "Interfaz intuitiva y fácil de usar" 
+  - "Comisiones cero en compras de acciones, ETFs y criptos"
 cons: 
-"Atención al cliente limitada"
+  - "Atención al cliente limitada"
 fees: "Sin comisiones de compra o mantenimiento, pero con tarifas en operaciones de opciones y retiro de fondos"
 affiliateLink: "https://ejemplo.com"
 bonus: "Recibe una acción gratuita al registrarte"
 language: "es"
 seoTitle: "Reseña de Robinhood 2026 | ¿Es una estafa o es seguro?"
-
 ---
 
 ### ¿Por qué elegir Robinhood?
