@@ -1,5 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const reviews = await getCollection('reviews', ({ data }) => {
+  return data.language === 'es';
+});
 ---
 
 <Layout title="Fintech SEO Platform | Nivel Agencia" lang="es">
@@ -79,7 +84,30 @@ import Layout from '../../layouts/Layout.astro';
 					</div>
 				</div>
 			</div>
-		</header>
+
+		<section id="reviews" class="reviews-section animate-fade-in" style="animation-delay: 0.7s">
+			<h2 class="section-title"><span class="text-gradient">Reseñas de Plataformas</span></h2>
+			<p class="section-subtitle">Lee nuestros análisis expertos e imparciales de las principales plataformas financieras globales.</p>
+			
+			<div class="reviews-grid">
+				{reviews.map(review => (
+					<a href={`/es/reviews/${review.id.replace('-es', '')}`} class="glass-panel review-card">
+						<div class="card-header">
+							<div class="platform-logo">{review.data.logo}</div>
+							<div>
+								<h3 class="platform-name">{review.data.name}</h3>
+								<span class="rating">⭐ {review.data.rating}</span>
+							</div>
+						</div>
+						<p class="platform-verdict">{review.data.verdict}</p>
+						<div class="card-footer">
+							<span class="bonus-tag">{review.data.bonus}</span>
+							<span class="read-more">Leer Reseña ↗</span>
+						</div>
+					</a>
+				))}
+			</div>
+		</section>
 	</main>
 </Layout>
 
@@ -331,5 +359,119 @@ import Layout from '../../layouts/Layout.astro';
 		.hero-visual {
 			margin-top: 60px;
 		}
+	}
+
+	/* Dynamic Reviews Styles */
+	.reviews-section {
+		margin-top: 100px;
+		margin-bottom: 100px;
+	}
+
+	.section-title {
+		font-size: 2.5rem;
+		font-weight: 800;
+		margin-bottom: 12px;
+		text-align: center;
+	}
+
+	.section-subtitle {
+		color: var(--text-muted);
+		text-align: center;
+		margin-bottom: 48px;
+		font-size: 1.1rem;
+	}
+
+	.reviews-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+		gap: 32px;
+	}
+
+	.review-card {
+		padding: 28px;
+		text-decoration: none;
+		color: inherit;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 220px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border: 1px solid var(--glass-border);
+	}
+
+	.review-card:hover {
+		transform: translateY(-5px);
+		border-color: var(--primary-neon);
+		box-shadow: 0 10px 30px rgba(0, 255, 170, 0.1);
+	}
+
+	.card-header {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+		margin-bottom: 16px;
+	}
+
+	.platform-logo {
+		width: 48px;
+		height: 48px;
+		background: linear-gradient(135deg, var(--primary-neon), var(--secondary-blue));
+		border-radius: 12px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 800;
+		font-size: 1.5rem;
+		color: var(--text-main);
+		text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+	}
+
+	.platform-name {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin: 0;
+	}
+
+	.rating {
+		font-size: 0.875rem;
+		color: #FFD700;
+		font-weight: 600;
+	}
+
+	.platform-verdict {
+		color: var(--text-muted);
+		font-size: 0.95rem;
+		line-height: 1.5;
+		margin-bottom: 24px;
+		flex-grow: 1;
+	}
+
+	.card-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-top: 1px solid rgba(255,255,255,0.05);
+		padding-top: 16px;
+	}
+
+	.bonus-tag {
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--primary-neon);
+		background: rgba(0, 255, 170, 0.1);
+		padding: 4px 10px;
+		border-radius: 20px;
+		border: 1px solid rgba(0, 255, 170, 0.2);
+	}
+
+	.read-more {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--text-main);
+		transition: color 0.3s ease;
+	}
+
+	.review-card:hover .read-more {
+		color: var(--primary-neon);
 	}
 </style>
