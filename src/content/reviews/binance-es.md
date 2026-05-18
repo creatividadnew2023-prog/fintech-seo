@@ -1,0 +1,1 @@
+{{ $('Redactor SEO de OpenAI').item.json.message.content }}
