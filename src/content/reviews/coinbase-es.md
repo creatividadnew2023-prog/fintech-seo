@@ -1,17 +1,19 @@
+---
 name: "Coinbase"
 rating: "4.9"
 verdict: "Una plataforma líder en el mercado de criptomonedas, ideal tanto para novatos como para traders experimentados."
 logo: "C"
 pros:  
-"Sencillez de uso con una interfaz intuitiva"
-"Amplia variedad de criptomonedas disponibles"
+  - "Sencillez de uso con una interfaz intuitiva"
+  - "Amplia variedad de criptomonedas disponibles"
 cons: 
-"Comisiones más altas comparadas con otras plataformas"
+  - "Comisiones más altas comparadas con otras plataformas"
 fees: "Coinbase cobra una comisión por operación que varía entre el 0.5% y el 4.5%, dependiendo del método de pago y la ubicación del usuario."
 affiliateLink: "https://ejemplo.com"
 bonus: "Recibe $10 en Bitcoin al usar nuestro enlace y operar $100."
 language: "es"
 seoTitle: "Reseña de Coinbase 2026 | ¿Es una estafa o es seguro? Análisis Completo"
+---
 
 ### ¿Qué es Coinbase y cómo funciona?
 
