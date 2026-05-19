@@ -1,6 +1,4 @@
 ---
-¡Claro! Aquí tienes la reseña que me pediste, siguiendo la estructura exacta y con las palabras clave SEO solicitadas:
-
 name: "Interactive Brokers"
 rating: "4.8"
 verdict: "Interactive Brokers es la plataforma de inversión definitiva para traders e inversores experimentados que buscan diversidad y bajos costos."
