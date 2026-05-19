@@ -1,123 +1,291 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { getRealAffiliateLink } from '../utils/affiliates';
 
 const reviews = await getCollection('reviews', ({ data }) => {
   return data.language === 'en';
 });
+
+// Helper to determine category dynamically for client-side filtering
+const getCategory = (name: string) => {
+  const n = name.toLowerCase();
+  if (['wise', 'revolut', 'n26', 'payoneer'].some(x => n.includes(x))) return 'banking';
+  if (['binance', 'coinbase', 'uphold', 'robinhood'].some(x => n.includes(x))) return 'investing';
+  if (['stripe', 'adyen', 'plaid'].some(x => n.includes(x))) return 'business';
+  return 'payments'; // Default for neteller, skrill, payeer, webmoney, paypal, apple pay, google pay
+};
 ---
 
-<Layout title="Fintech SEO Platform | Agency Level">
+<Layout title="Caribbean Trade | Premium Fintech Reviews & Credit Cards Comparison">
 	<main class="container">
+		<!-- Editorial Disclosure Bar (Builds Instant Google and Network Trust) -->
+		<div class="disclosure-bar">
+			<span class="disclosure-badge">ADVERTISER DISCLOSURE</span>
+			<p>
+				Caribbean Trade is an independent, advertising-supported comparison platform. Our expert reviews are 100% objective, transparent, and backed by data-driven analysis to help you make smart financial choices. We may receive compensation from partner brands, but this never influences our editorial ratings.
+			</p>
+		</div>
+
 		<nav class="navbar animate-fade-in" style="animation-delay: 0.1s">
 			<div class="logo">
 				<div class="logo-icon"></div>
-				<span class="text-gradient">FinEdge</span>
+				<span class="text-gradient font-accent">Caribbean Trade</span>
 			</div>
 			<div class="nav-links">
-				<a href="#markets">Markets</a>
-				<a href="#cards">Cards</a>
-				<a href="#loans">Loans</a>
-				<a href="#investments">Investing</a>
+				<a href="#reviews" class="category-trigger" data-filter="all">All Reviews</a>
+				<a href="#reviews" class="category-trigger" data-filter="banking">Accounts</a>
+				<a href="#reviews" class="category-trigger" data-filter="payments">Payments</a>
+				<a href="#reviews" class="category-trigger" data-filter="investing">Trading</a>
+				<a href="#reviews" class="category-trigger" data-filter="business">Merchant Gateways</a>
 			</div>
 			<div class="lang-switch">
-				<a href="/es" class="lang-link">🇪🇸 ESP</a>
-				<a href="#join" class="btn-primary">Open Account</a>
+				<a href="/es" class="lang-link">🇪🇸 ESPAÑOL</a>
+				<a href="#reviews" class="btn-primary">Compare Offers</a>
 			</div>
 		</nav>
 
 		<header class="hero">
 			<div class="hero-content animate-fade-in" style="animation-delay: 0.3s">
-				<div class="badge">🚀 The future of money</div>
+				<div class="badge">🛡️ SECURE &amp; REGULATED PARTNERS</div>
 				<h1 class="title">
-					Multiply your Capital.<br/>
-					<span class="text-gradient">Without Borders.</span>
+					Smart Financial Decisions.<br/>
+					<span class="text-gradient">Backed by Data.</span>
 				</h1>
 				<p class="subtitle">
-					Access international accounts, virtual cards, and global investment platforms from a single place. Transparent, secure, and with 0% hidden fees.
+					Compare top-rated international bank accounts, high-yield credit cards, digital wallets, and business payment gateways in the USA. Unbiased analysis for modern freelancers, travelers, and global entities.
 				</p>
+				
 				<div class="hero-actions">
-					<a href="#start" class="btn-primary">Start Investing</a>
-					<a href="#demo" class="btn-secondary">View Demo</a>
+					<a href="#reviews" class="btn-primary scroll-to">Find Your Best Account</a>
+					<a href="#about-our-method" class="btn-secondary">Our Review Methodology</a>
 				</div>
-				<div class="stats">
-					<div class="stat-item">
-						<span class="stat-num">$2.4B+</span>
-						<span class="stat-label">Trading Volume</span>
+
+				<div class="trust-badges">
+					<div class="trust-item">
+						<span class="trust-icon">✓</span>
+						<span class="trust-label">100% Independent Reviews</span>
 					</div>
-					<div class="stat-item">
-						<span class="stat-num">1.2M</span>
-						<span class="stat-label">Active Users</span>
+					<div class="trust-item">
+						<span class="trust-icon">✓</span>
+						<span class="trust-label">Strict Editorial Standards</span>
 					</div>
-					<div class="stat-item">
-						<span class="stat-num">99.9%</span>
-						<span class="stat-label">Uptime</span>
+					<div class="trust-item">
+						<span class="trust-icon">✓</span>
+						<span class="trust-label">Regulated US Partners Only</span>
 					</div>
 				</div>
 			</div>
 
-			<div class="hero-visual animate-float animate-fade-in" style="animation-delay: 0.5s">
-				<div class="glass-panel card-visual">
-					<div class="card-chip"></div>
-					<div class="card-network">VISA</div>
-					<div class="card-balance">
-						<span class="label">Current Balance</span>
-						<span class="amount">$24,592.00</span>
+			<!-- Premium Editorial Control Panel (The Conversion Hook) -->
+			<div class="hero-visual animate-fade-in" style="animation-delay: 0.5s">
+				<div class="editorial-hub-card glass-panel">
+					<div class="hub-header">
+						<span class="hub-title">COMPARE BY CATEGORY</span>
+						<span class="pulse-dot"></span>
 					</div>
-					<div class="card-details">
-						<span>**** **** **** 4092</span>
-						<span>12/28</span>
+					<div class="category-shortcuts">
+						<button class="shortcut-btn active" data-target="all">
+							<span class="btn-num">01</span>
+							<span class="btn-name">🏦 Neobanks &amp; Checking</span>
+						</button>
+						<button class="shortcut-btn" data-target="payments">
+							<span class="btn-num">02</span>
+							<span class="btn-name">💳 Wallets &amp; Transfers</span>
+						</button>
+						<button class="shortcut-btn" data-target="investing">
+							<span class="btn-num">03</span>
+							<span class="btn-name">📈 Trading &amp; Investment</span>
+						</button>
+						<button class="shortcut-btn" data-target="business">
+							<span class="btn-num">04</span>
+							<span class="btn-name">💼 Merchant Gateways</span>
+						</button>
 					</div>
-				</div>
-				<div class="glass-panel chart-visual">
-					<div class="chart-header">
-						<span>Portfolio</span>
-						<span style="color: var(--primary-neon)">+14.2% ↗</span>
-					</div>
-					<div class="chart-bars">
-						<div class="bar" style="height: 40%"></div>
-						<div class="bar" style="height: 70%"></div>
-						<div class="bar" style="height: 50%"></div>
-						<div class="bar" style="height: 90%"></div>
-						<div class="bar" style="height: 60%"></div>
-						<div class="bar" style="height: 100%"></div>
+					<div class="hub-footer">
+						<span>Select a category to filter expert reviews instantly</span>
 					</div>
 				</div>
 			</div>
+		</header>
 
+		<!-- Interactive Filter Tabs -->
 		<section id="reviews" class="reviews-section animate-fade-in" style="animation-delay: 0.7s">
-			<h2 class="section-title"><span class="text-gradient">Platform Reviews</span></h2>
-			<p class="section-subtitle">Read our expert, unbiased reviews of the leading global financial platforms.</p>
-			
+			<div class="section-header">
+				<h2 class="section-title">Fintech &amp; Banking <span class="text-gradient">Database</span></h2>
+				<p class="section-subtitle">Read detailed, unbiased analyses of leading global financial platforms. Use the tabs below to filter instantly.</p>
+			</div>
+
+			<!-- Pill Filters -->
+			<div class="filter-tabs">
+				<button class="filter-tab active" data-filter="all">✨ All Solutions</button>
+				<button class="filter-tab" data-filter="banking">🏦 Neobanks &amp; Checking</button>
+				<button class="filter-tab" data-filter="payments">💳 Wallets &amp; Transfers</button>
+				<button class="filter-tab" data-filter="investing">📈 Trading &amp; Crypto</button>
+				<button class="filter-tab" data-filter="business">💼 Merchant Gateways</button>
+			</div>
+
+			<!-- Dynamic Review Cards Grid -->
 			<div class="reviews-grid">
-				{reviews.map(review => (
-					<a href={`/reviews/${review.id.replace('-en', '')}`} class="glass-panel review-card">
-						<div class="card-header">
-							<div class="platform-logo">{review.data.logo}</div>
-							<div>
-								<h3 class="platform-name">{review.data.name}</h3>
-								<span class="rating">⭐ {review.data.rating}</span>
+				{reviews.map(review => {
+					const category = getCategory(review.data.name);
+					return (
+						<div class="glass-panel review-card" data-category={category}>
+							<div class="card-header">
+								<div class="platform-logo">{review.data.logo}</div>
+								<div>
+									<div class="meta-row">
+										<span class="category-badge">{category.toUpperCase()}</span>
+										<span class="rating">⭐ {review.data.rating}</span>
+									</div>
+									<h3 class="platform-name">{review.data.name}</h3>
+								</div>
+							</div>
+							<p class="platform-verdict">{review.data.verdict}</p>
+							
+							<div class="highlights">
+								<span class="highlight-title">Highlights:</span>
+								<ul>
+									{review.data.pros.slice(0, 2).map((pro: string) => (
+										<li>✓ {pro}</li>
+									))}
+								</ul>
+							</div>
+
+							<div class="card-footer">
+								<span class="bonus-tag">{review.data.bonus}</span>
+								<div class="actions">
+									<a href={`/reviews/${review.id.replace('-en', '')}`} class="btn-text">Read Analysis ↗</a>
+									<a href={getRealAffiliateLink(review.data.name, review.data.affiliateLink)} target="_blank" rel="nofollow" class="btn-small">Visit Site</a>
+								</div>
 							</div>
 						</div>
-						<p class="platform-verdict">{review.data.verdict}</p>
-						<div class="card-footer">
-							<span class="bonus-tag">{review.data.bonus}</span>
-							<span class="read-more">Read Review ↗</span>
-						</div>
-					</a>
-				))}
+					);
+				})}
+			</div>
+		</section>
+
+		<!-- Methodology & Integrity Section (Solidifies Authority for Google Indexing) -->
+		<section id="about-our-method" class="methodology-section glass-panel">
+			<div class="methodology-content">
+				<h3>🛡️ Our Review &amp; Editorial Methodology</h3>
+				<p>
+					At Caribbean Trade, we believe in radical transparency. Every fintech app, bank account, and card we review undergoes a rigorous evaluation framework consisting of 5 critical pillars: fees transparency, regulatory license verification, speed of service, API security (for business apps), and ease of international access for foreign entities and freelancers.
+				</p>
+				<p>
+					Our team is dedicated to providing up-to-date information on US and global financial services, helping you safely grow your business capital, build strong credit ratings, and avoid predatory terms or hidden charges.
+				</p>
 			</div>
 		</section>
 	</main>
 </Layout>
 
+<!-- Client Side High Performance Filter Script (Vanilla JS for Instant Load Uptime) -->
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const filterTabs = document.querySelectorAll('.filter-tab, .shortcut-btn, .category-trigger');
+		const cards = document.querySelectorAll('.review-card');
+
+		filterTabs.forEach(tab => {
+			tab.addEventListener('click', (e) => {
+				e.preventDefault();
+				
+				// Get filter category target
+				const target = tab.getAttribute('data-filter') || tab.getAttribute('data-target');
+				if (!target) return;
+
+				// Update active state in all filter selectors
+				filterTabs.forEach(t => {
+					if (t.getAttribute('data-filter') === target || t.getAttribute('data-target') === target) {
+						t.classList.add('active');
+					} else {
+						t.classList.remove('active');
+					}
+				});
+
+				// Filter cards with smooth opacity transitions
+				cards.forEach(card => {
+					const cardCategory = card.getAttribute('data-category');
+					
+					if (target === 'all' || cardCategory === target) {
+						card.style.display = 'flex';
+						setTimeout(() => {
+							card.style.opacity = '1';
+							card.style.transform = 'translateY(0) scale(1)';
+						}, 50);
+					} else {
+						card.style.opacity = '0';
+						card.style.transform = 'translateY(15px) scale(0.95)';
+						setTimeout(() => {
+							card.style.display = 'none';
+						}, 300);
+					}
+				});
+
+				// If we clicked a hero or navbar trigger, scroll smoothly down to the reviews section
+				if (tab.classList.contains('shortcut-btn') || tab.classList.contains('category-trigger')) {
+					const reviewsSection = document.getElementById('reviews');
+					if (reviewsSection) {
+						reviewsSection.scrollIntoView({ behavior: 'smooth' });
+					}
+				}
+			});
+		});
+
+		// Smooth scroll for buttons
+		const scrollButtons = document.querySelectorAll('.scroll-to');
+		scrollButtons.forEach(btn => {
+			btn.addEventListener('click', (e) => {
+				e.preventDefault();
+				const targetId = btn.getAttribute('href');
+				if (targetId) {
+					const targetElement = document.querySelector(targetId);
+					if (targetElement) {
+						targetElement.scrollIntoView({ behavior: 'smooth' });
+					}
+				}
+			});
+		});
+	});
+</script>
+
 <style>
+	/* Premium Editorial Stylesheet */
+	.disclosure-bar {
+		background: rgba(15, 23, 42, 0.4);
+		border-bottom: 1px solid var(--glass-border);
+		padding: 12px 24px;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		display: flex;
+		gap: 16px;
+		align-items: center;
+		margin-bottom: 20px;
+		border-radius: 8px;
+	}
+
+	.disclosure-badge {
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--text-main);
+		font-weight: 700;
+		padding: 4px 8px;
+		border-radius: 4px;
+		font-size: 0.7rem;
+		letter-spacing: 0.05em;
+		white-space: nowrap;
+	}
+
+	.disclosure-bar p {
+		margin: 0;
+		line-height: 1.4;
+	}
+
 	.navbar {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 24px 0;
-		margin-bottom: 60px;
+		padding: 16px 0;
+		margin-bottom: 40px;
 	}
 
 	.logo {
@@ -126,6 +294,11 @@ const reviews = await getCollection('reviews', ({ data }) => {
 		gap: 12px;
 		font-size: 1.5rem;
 		font-weight: 800;
+	}
+
+	.font-accent {
+		font-family: 'Outfit', sans-serif;
+		letter-spacing: -0.01em;
 	}
 
 	.logo-icon {
@@ -138,7 +311,7 @@ const reviews = await getCollection('reviews', ({ data }) => {
 
 	.nav-links {
 		display: flex;
-		gap: 32px;
+		gap: 24px;
 	}
 
 	.nav-links a {
@@ -146,6 +319,7 @@ const reviews = await getCollection('reviews', ({ data }) => {
 		text-decoration: none;
 		font-weight: 500;
 		transition: color 0.3s ease;
+		font-size: 0.95rem;
 	}
 
 	.nav-links a:hover {
@@ -161,9 +335,10 @@ const reviews = await getCollection('reviews', ({ data }) => {
 	.lang-link {
 		color: var(--text-muted);
 		text-decoration: none;
-		font-weight: 600;
-		font-size: 0.9rem;
+		font-weight: 700;
+		font-size: 0.85rem;
 		transition: color 0.3s ease;
+		letter-spacing: 0.05em;
 	}
 
 	.lang-link:hover {
@@ -172,34 +347,35 @@ const reviews = await getCollection('reviews', ({ data }) => {
 
 	.hero {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1.2fr 0.8fr;
 		gap: 60px;
 		align-items: center;
-		min-height: calc(100vh - 200px);
+		padding: 40px 0 80px 0;
 	}
 
 	.badge {
 		display: inline-block;
-		background: rgba(0, 255, 170, 0.1);
+		background: rgba(0, 255, 170, 0.08);
 		color: var(--primary-neon);
-		padding: 8px 16px;
+		padding: 6px 16px;
 		border-radius: 20px;
-		font-size: 0.875rem;
-		font-weight: 600;
+		font-size: 0.8rem;
+		font-weight: 700;
 		margin-bottom: 24px;
-		border: 1px solid rgba(0, 255, 170, 0.2);
+		border: 1px solid rgba(0, 255, 170, 0.15);
+		letter-spacing: 0.05em;
 	}
 
 	.title {
-		font-size: 4.5rem;
-		line-height: 1.1;
+		font-size: 4rem;
+		line-height: 1.15;
 		font-weight: 800;
 		margin-bottom: 24px;
 		letter-spacing: -0.02em;
 	}
 
 	.subtitle {
-		font-size: 1.25rem;
+		font-size: 1.2rem;
 		color: var(--text-muted);
 		line-height: 1.6;
 		margin-bottom: 40px;
@@ -209,135 +385,402 @@ const reviews = await getCollection('reviews', ({ data }) => {
 	.hero-actions {
 		display: flex;
 		gap: 16px;
-		margin-bottom: 60px;
+		margin-bottom: 40px;
 	}
 
-	.stats {
+	.trust-badges {
 		display: flex;
-		gap: 48px;
+		flex-wrap: wrap;
+		gap: 24px;
 		border-top: 1px solid var(--glass-border);
-		padding-top: 32px;
+		padding-top: 24px;
 	}
 
-	.stat-item {
+	.trust-item {
 		display: flex;
-		flex-direction: column;
-		gap: 4px;
-	}
-
-	.stat-num {
-		font-size: 2rem;
-		font-weight: 700;
-		color: var(--text-main);
-	}
-
-	.stat-label {
-		color: var(--text-muted);
-		font-size: 0.875rem;
-	}
-
-	.hero-visual {
-		position: relative;
-		height: 500px;
-	}
-
-	.card-visual {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%) rotate(-10deg);
-		width: 380px;
-		height: 240px;
-		padding: 24px;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-		border: 1px solid rgba(255,255,255,0.2);
-		z-index: 2;
-	}
-
-	.card-chip {
-		width: 45px;
-		height: 35px;
-		background: linear-gradient(135deg, #FFD700, #DAA520);
-		border-radius: 6px;
-	}
-
-	.card-network {
-		position: absolute;
-		top: 24px;
-		right: 24px;
-		font-size: 1.5rem;
-		font-weight: 800;
-		font-style: italic;
-	}
-
-	.card-balance {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.card-balance .label {
-		font-size: 0.875rem;
-		color: rgba(255,255,255,0.7);
-	}
-
-	.card-balance .amount {
-		font-size: 2rem;
-		font-weight: 700;
-		letter-spacing: 1px;
-	}
-
-	.card-details {
-		display: flex;
-		justify-content: space-between;
-		font-family: monospace;
-		font-size: 1.1rem;
-		color: rgba(255,255,255,0.8);
-	}
-
-	.chart-visual {
-		position: absolute;
-		bottom: 20px;
-		right: 0px;
-		width: 280px;
-		padding: 20px;
-		z-index: 1;
-	}
-
-	.chart-header {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 20px;
-		font-weight: 600;
-	}
-
-	.chart-bars {
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
-		height: 100px;
+		align-items: center;
 		gap: 8px;
 	}
 
-	.bar {
-		width: 100%;
-		background: var(--primary-neon);
-		border-radius: 4px 4px 0 0;
-		opacity: 0.8;
-		transition: height 0.5s ease;
+	.trust-icon {
+		color: var(--primary-neon);
+		font-weight: 900;
+		font-size: 1.1rem;
 	}
 
-	.bar:hover {
-		opacity: 1;
+	.trust-label {
+		color: var(--text-muted);
+		font-size: 0.85rem;
+		font-weight: 500;
+	}
+
+	/* Hero Category Hub Widget styles */
+	.hero-visual {
+		display: flex;
+		justify-content: flex-end;
+		height: 100%;
+		align-items: center;
+	}
+
+	.editorial-hub-card {
+		width: 100%;
+		max-width: 400px;
+		padding: 32px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		border: 1px solid var(--glass-border);
+		background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(10, 15, 30, 0.9) 100%);
+	}
+
+	.hub-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 24px;
+		border-bottom: 1px solid var(--glass-border);
+		padding-bottom: 16px;
+	}
+
+	.hub-title {
+		font-size: 0.75rem;
+		font-weight: 800;
+		color: var(--text-muted);
+		letter-spacing: 0.1em;
+	}
+
+	.pulse-dot {
+		width: 8px;
+		height: 8px;
+		background-color: var(--primary-neon);
+		border-radius: 50%;
 		box-shadow: 0 0 10px var(--primary-neon);
+		animation: pulse 2s infinite;
+	}
+
+	@keyframes pulse {
+		0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 170, 0.7); }
+		70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 255, 170, 0); }
+		100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 170, 0); }
+	}
+
+	.category-shortcuts {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin-bottom: 24px;
+	}
+
+	.shortcut-btn {
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid var(--glass-border);
+		padding: 14px 20px;
+		border-radius: 12px;
+		color: var(--text-main);
+		text-align: left;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		transition: all 0.3s ease;
+	}
+
+	.shortcut-btn:hover {
+		background: rgba(0, 255, 170, 0.05);
+		border-color: rgba(0, 255, 170, 0.3);
+		transform: translateX(4px);
+	}
+
+	.shortcut-btn.active {
+		background: rgba(0, 255, 170, 0.08);
+		border-color: var(--primary-neon);
+		box-shadow: 0 0 15px rgba(0, 255, 170, 0.15);
+	}
+
+	.btn-num {
+		font-size: 0.8rem;
+		font-weight: 800;
+		color: var(--primary-neon);
+		font-family: monospace;
+	}
+
+	.btn-name {
+		font-size: 0.95rem;
+		font-weight: 600;
+	}
+
+	.hub-footer {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		text-align: center;
+		border-top: 1px solid var(--glass-border);
+		padding-top: 16px;
+	}
+
+	/* Filter Tabs styles */
+	.reviews-section {
+		margin-top: 60px;
+		padding-top: 60px;
+		border-top: 1px solid var(--glass-border);
+		margin-bottom: 80px;
+	}
+
+	.section-header {
+		text-align: center;
+		margin-bottom: 40px;
+	}
+
+	.section-title {
+		font-size: 2.75rem;
+		font-weight: 800;
+		margin-bottom: 12px;
+	}
+
+	.section-subtitle {
+		color: var(--text-muted);
+		font-size: 1.1rem;
+		max-width: 600px;
+		margin: 0 auto;
+		line-height: 1.5;
+	}
+
+	.filter-tabs {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-bottom: 48px;
+	}
+
+	.filter-tab {
+		background: rgba(15, 23, 42, 0.6);
+		border: 1px solid var(--glass-border);
+		color: var(--text-muted);
+		padding: 10px 20px;
+		border-radius: 30px;
+		font-weight: 600;
+		font-size: 0.9rem;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.filter-tab:hover {
+		color: var(--text-main);
+		border-color: rgba(255,255,255,0.2);
+		background: rgba(255,255,255,0.05);
+	}
+
+	.filter-tab.active {
+		background: linear-gradient(135deg, var(--primary-neon) 0%, #00b377 100%);
+		color: #000000;
+		border-color: var(--primary-neon);
+		box-shadow: 0 4px 15px rgba(0, 255, 170, 0.25);
+	}
+
+	/* Reviews grid & cards styles */
+	.reviews-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+		gap: 32px;
+	}
+
+	.review-card {
+		padding: 28px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 380px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+
+	.review-card:hover {
+		transform: translateY(-6px);
+		border-color: var(--primary-neon);
+		box-shadow: 0 12px 35px rgba(0, 255, 170, 0.12);
+	}
+
+	.card-header {
+		display: flex;
+		gap: 20px;
+		align-items: flex-start;
+		margin-bottom: 20px;
+	}
+
+	.platform-logo {
+		width: 54px;
+		height: 54px;
+		background: linear-gradient(135deg, var(--bg-dark), rgba(255,255,255,0.08));
+		border: 1px solid var(--glass-border);
+		border-radius: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 800;
+		font-size: 1.7rem;
+		color: var(--primary-neon);
+		box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+	}
+
+	.meta-row {
+		display: flex;
+		gap: 12px;
+		align-items: center;
+		margin-bottom: 4px;
+	}
+
+	.category-badge {
+		font-size: 0.65rem;
+		font-weight: 800;
+		color: var(--text-muted);
+		border: 1px solid var(--glass-border);
+		padding: 2px 6px;
+		border-radius: 4px;
+		letter-spacing: 0.05em;
+	}
+
+	.rating {
+		font-size: 0.8rem;
+		color: #FFD700;
+		font-weight: 700;
+	}
+
+	.platform-name {
+		font-size: 1.35rem;
+		font-weight: 700;
+		margin: 0;
+	}
+
+	.platform-verdict {
+		color: var(--text-muted);
+		font-size: 0.95rem;
+		line-height: 1.6;
+		margin-bottom: 20px;
+		flex-grow: 1;
+	}
+
+	.highlights {
+		border-top: 1px dashed var(--glass-border);
+		padding-top: 16px;
+		margin-bottom: 20px;
+	}
+
+	.highlight-title {
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--text-main);
+		display: block;
+		margin-bottom: 8px;
+	}
+
+	.highlights ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	.highlights ul li {
+		font-size: 0.85rem;
+		color: var(--text-muted);
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.card-footer {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		border-top: 1px solid var(--glass-border);
+		padding-top: 20px;
+	}
+
+	.bonus-tag {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--primary-neon);
+		background: rgba(0, 255, 170, 0.06);
+		padding: 4px 10px;
+		border-radius: 6px;
+		border: 1px solid rgba(0, 255, 170, 0.12);
+		text-align: center;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.card-footer .actions {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+	}
+
+	.btn-text {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--text-main);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.btn-text:hover {
+		color: var(--primary-neon);
+	}
+
+	.btn-small {
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--glass-border);
+		color: var(--text-main);
+		padding: 8px 16px;
+		border-radius: 8px;
+		font-size: 0.85rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition: all 0.3s ease;
+	}
+
+	.btn-small:hover {
+		background: var(--text-main);
+		color: var(--bg-dark);
+		border-color: var(--text-main);
+	}
+
+	/* Methodology styles */
+	.methodology-section {
+		margin-top: 80px;
+		padding: 48px;
+		border: 1px solid var(--glass-border);
+		background: linear-gradient(135deg, rgba(15, 23, 42, 0.3) 0%, rgba(5, 10, 20, 0.5) 100%);
+	}
+
+	.methodology-content h3 {
+		font-size: 1.5rem;
+		font-weight: 800;
+		margin-bottom: 16px;
+		color: var(--text-main);
+	}
+
+	.methodology-content p {
+		color: var(--text-muted);
+		line-height: 1.7;
+		font-size: 1rem;
+		margin-bottom: 16px;
+	}
+
+	.methodology-content p:last-child {
+		margin-bottom: 0;
 	}
 
 	@media (max-width: 968px) {
 		.hero {
 			grid-template-columns: 1fr;
 			text-align: center;
+			gap: 40px;
 		}
 
 		.nav-links {
@@ -352,126 +795,16 @@ const reviews = await getCollection('reviews', ({ data }) => {
 			justify-content: center;
 		}
 
-		.stats {
+		.trust-badges {
 			justify-content: center;
 		}
 
 		.hero-visual {
-			margin-top: 60px;
+			justify-content: center;
 		}
-	}
 
-	/* Dynamic Reviews Styles */
-	.reviews-section {
-		margin-top: 100px;
-		margin-bottom: 100px;
-	}
-
-	.section-title {
-		font-size: 2.5rem;
-		font-weight: 800;
-		margin-bottom: 12px;
-		text-align: center;
-	}
-
-	.section-subtitle {
-		color: var(--text-muted);
-		text-align: center;
-		margin-bottom: 48px;
-		font-size: 1.1rem;
-	}
-
-	.reviews-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-		gap: 32px;
-	}
-
-	.review-card {
-		padding: 28px;
-		text-decoration: none;
-		color: inherit;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		min-height: 220px;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		border: 1px solid var(--glass-border);
-	}
-
-	.review-card:hover {
-		transform: translateY(-5px);
-		border-color: var(--primary-neon);
-		box-shadow: 0 10px 30px rgba(0, 255, 170, 0.1);
-	}
-
-	.card-header {
-		display: flex;
-		gap: 16px;
-		align-items: center;
-		margin-bottom: 16px;
-	}
-
-	.platform-logo {
-		width: 48px;
-		height: 48px;
-		background: linear-gradient(135deg, var(--primary-neon), var(--secondary-blue));
-		border-radius: 12px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-weight: 800;
-		font-size: 1.5rem;
-		color: var(--text-main);
-		text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-	}
-
-	.platform-name {
-		font-size: 1.25rem;
-		font-weight: 700;
-		margin: 0;
-	}
-
-	.rating {
-		font-size: 0.875rem;
-		color: #FFD700;
-		font-weight: 600;
-	}
-
-	.platform-verdict {
-		color: var(--text-muted);
-		font-size: 0.95rem;
-		line-height: 1.5;
-		margin-bottom: 24px;
-		flex-grow: 1;
-	}
-
-	.card-footer {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		border-top: 1px solid rgba(255,255,255,0.05);
-		padding-top: 16px;
-	}
-
-	.bonus-tag {
-		font-size: 0.8rem;
-		font-weight: 600;
-		color: var(--primary-neon);
-		background: rgba(0, 255, 170, 0.1);
-		padding: 4px 10px;
-		border-radius: 20px;
-		border: 1px solid rgba(0, 255, 170, 0.2);
-	}
-
-	.read-more {
-		font-size: 0.9rem;
-		font-weight: 600;
-		color: var(--text-main);
-		transition: color 0.3s ease;
-	}
-
-	.review-card:hover .read-more {
-		color: var(--primary-neon);
+		.reviews-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
