@@ -1,68 +1,77 @@
+export const getDomainByName = (name: string): string => {
+  const cleanName = name.toLowerCase().trim();
+  
+  // Core Neobanks & Wallets
+  if (cleanName.includes('wise')) return 'wise.com';
+  if (cleanName.includes('revolut')) return 'revolut.com';
+  if (cleanName.includes('n26')) return 'n26.com';
+  if (cleanName.includes('payoneer')) return 'payoneer.com';
+  if (cleanName.includes('bunq')) return 'bunq.com';
+  
+  // USA Banks
+  if (cleanName.includes('chime')) return 'chime.com';
+  if (cleanName.includes('sofi')) return 'sofi.com';
+  if (cleanName.includes('varo')) return 'varomoney.com';
+  if (cleanName.includes('ally')) return 'ally.com';
+  if (cleanName.includes('mercury')) return 'mercury.com';
+  if (cleanName.includes('novo')) return 'novo.co';
+  if (cleanName.includes('lili')) return 'lili.co';
+  if (cleanName.includes('axos')) return 'axosbank.com';
+  
+  // Credit Cards
+  if (cleanName.includes('chase')) return 'chase.com';
+  if (cleanName.includes('capital one')) return 'capitalone.com';
+  if (cleanName.includes('amex') || cleanName.includes('american express')) return 'americanexpress.com';
+  if (cleanName.includes('citi')) return 'citi.com';
+  if (cleanName.includes('apple')) return 'apple.com';
+  if (cleanName.includes('discover')) return 'discover.com';
+  
+  // Loans & Finance
+  if (cleanName.includes('lendingclub')) return 'lendingclub.com';
+  if (cleanName.includes('marcus')) return 'marcus.com';
+  if (cleanName.includes('upstart')) return 'upstart.com';
+  if (cleanName.includes('avant')) return 'avant.com';
+  if (cleanName.includes('best egg')) return 'bestegg.com';
+  
+  // Payment Gateways
+  if (cleanName.includes('stripe')) return 'stripe.com';
+  if (cleanName.includes('adyen')) return 'adyen.com';
+  if (cleanName.includes('square')) return 'squareup.com';
+  if (cleanName.includes('shopify')) return 'shopify.com';
+  if (cleanName.includes('braintree')) return 'braintreepayments.com';
+  if (cleanName.includes('authorize.net')) return 'authorize.net';
+  if (cleanName.includes('klarna')) return 'klarna.com';
+  if (cleanName.includes('affirm')) return 'affirm.com';
+  if (cleanName.includes('plaid')) return 'plaid.com';
+  if (cleanName.includes('paypal')) return 'paypal.com';
+  if (cleanName.includes('neteller')) return 'neteller.com';
+  if (cleanName.includes('skrill')) return 'skrill.com';
+  if (cleanName.includes('payeer')) return 'payeer.com';
+  if (cleanName.includes('webmoney')) return 'webmoney.ru';
+
+  // Brokers & Crypto
+  if (cleanName.includes('binance')) return 'binance.com';
+  if (cleanName.includes('coinbase')) return 'coinbase.com';
+  if (cleanName.includes('uphold')) return 'uphold.com';
+  if (cleanName.includes('webull')) return 'webull.com';
+  if (cleanName.includes('charles schwab')) return 'schwab.com';
+  if (cleanName.includes('fidelity')) return 'fidelity.com';
+  if (cleanName.includes('etoro')) return 'etoro.com';
+  if (cleanName.includes('nexo')) return 'nexo.com';
+  if (cleanName.includes('kucoin')) return 'kucoin.com';
+  
+  // Fallback direct URL construction
+  return `${cleanName.replace(/[^a-z0-9]/g, '')}.com`;
+};
+
 export const getRealAffiliateLink = (name: string, fallback: string): string => {
   if (!fallback || fallback.includes('ejemplo.com') || fallback.includes('example.com')) {
     const cleanName = name.toLowerCase().trim();
-    
-    // Core Neobanks & Wallets
-    if (cleanName.includes('wise')) return 'https://wise.com';
-    if (cleanName.includes('revolut')) return 'https://revolut.com';
-    if (cleanName.includes('n26')) return 'https://n26.com';
-    if (cleanName.includes('payoneer')) return 'https://payoneer.com';
-    if (cleanName.includes('bunq')) return 'https://bunq.com';
-    
-    // USA Banks
-    if (cleanName.includes('chime')) return 'https://chime.com';
-    if (cleanName.includes('sofi')) return 'https://sofi.com';
-    if (cleanName.includes('varo')) return 'https://varomoney.com';
-    if (cleanName.includes('ally')) return 'https://ally.com';
-    if (cleanName.includes('mercury')) return 'https://mercury.com';
-    if (cleanName.includes('novo')) return 'https://novo.co';
-    if (cleanName.includes('lili')) return 'https://lili.co';
-    if (cleanName.includes('axos')) return 'https://axosbank.com';
-    
-    // Credit Cards
-    if (cleanName.includes('chase')) return 'https://chase.com';
-    if (cleanName.includes('capital one')) return 'https://capitalone.com';
-    if (cleanName.includes('amex') || cleanName.includes('american express')) return 'https://americanexpress.com';
-    if (cleanName.includes('citi')) return 'https://citi.com';
-    if (cleanName.includes('apple')) return 'https://apple.com';
-    if (cleanName.includes('discover')) return 'https://discover.com';
-    
-    // Loans & Finance
-    if (cleanName.includes('lendingclub')) return 'https://lendingclub.com';
-    if (cleanName.includes('marcus')) return 'https://marcus.com';
-    if (cleanName.includes('upstart')) return 'https://upstart.com';
-    if (cleanName.includes('avant')) return 'https://avant.com';
-    if (cleanName.includes('best egg')) return 'https://bestegg.com';
-    
-    // Payment Gateways
-    if (cleanName.includes('stripe')) return 'https://stripe.com';
-    if (cleanName.includes('adyen')) return 'https://adyen.com';
-    if (cleanName.includes('square')) return 'https://squareup.com';
-    if (cleanName.includes('shopify')) return 'https://shopify.com';
-    if (cleanName.includes('braintree')) return 'https://braintreepayments.com';
-    if (cleanName.includes('authorize.net')) return 'https://authorize.net';
-    if (cleanName.includes('klarna')) return 'https://klarna.com';
-    if (cleanName.includes('affirm')) return 'https://affirm.com';
-    if (cleanName.includes('plaid')) return 'https://plaid.com';
-    if (cleanName.includes('paypal')) return 'https://paypal.com';
-    if (cleanName.includes('neteller')) return 'https://neteller.com';
-    if (cleanName.includes('skrill')) return 'https://skrill.com';
-    if (cleanName.includes('payeer')) return 'https://payeer.com';
-    if (cleanName.includes('webmoney')) return 'https://webmoney.ru';
-
-    // Brokers & Crypto
-    if (cleanName.includes('binance')) return 'https://www.binance.com/activity/referral-entry/CPA?ref=CPA_0029XHRETF';
-    if (cleanName.includes('coinbase')) return 'https://coinbase.com';
-    if (cleanName.includes('uphold')) return 'https://uphold.com';
-    if (cleanName.includes('webull')) return 'https://webull.com';
-    if (cleanName.includes('charles schwab')) return 'https://schwab.com';
-    if (cleanName.includes('fidelity')) return 'https://fidelity.com';
-    if (cleanName.includes('etoro')) return 'https://etoro.com';
-    if (cleanName.includes('nexo')) return 'https://nexo.com';
-    if (cleanName.includes('kucoin')) return 'https://kucoin.com';
-    
-    // Fallback direct URL construction
-    return `https://${cleanName.replace(/[^a-z0-9]/g, '')}.com`;
+    if (cleanName.includes('binance')) {
+      return 'https://www.binance.com/activity/referral-entry/CPA?ref=CPA_0029XHRETF';
+    }
+    return `https://${getDomainByName(name)}`;
   }
   return fallback;
 };
+

@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { getRealAffiliateLink } from '../../utils/affiliates';
+import { getRealAffiliateLink, getDomainByName } from '../../utils/affiliates';
 
 const reviews = await getCollection('reviews', ({ data }) => {
   return data.language === 'es';
@@ -131,8 +131,17 @@ const getCategory = (name: string) => {
 					const category = getCategory(review.data.name);
 					return (
 						<div class="glass-panel review-card" data-category={category}>
-							<div class="card-header">
-								<div class="platform-logo">{review.data.logo}</div>
+								<div class="platform-logo">
+									{getDomainByName(review.data.name) ? (
+										<img 
+											src={`https://logo.clearbit.com/${getDomainByName(review.data.name)}?size=64`} 
+											alt={`${review.data.name} logo`} 
+											class="platform-logo-img" 
+											onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+										/>
+									) : null}
+									<span class="platform-logo-fallback" style={getDomainByName(review.data.name) ? "display: none;" : ""}>{review.data.logo}</span>
+								</div>
 								<div>
 									<div class="meta-row">
 										<span class="category-badge">
@@ -625,6 +634,23 @@ const getCategory = (name: string) => {
 		font-size: 1.7rem;
 		color: var(--primary-neon);
 		box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+		overflow: hidden;
+	}
+
+	.platform-logo-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		padding: 6px;
+		border-radius: 12px;
+	}
+
+	.platform-logo-fallback {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
 	}
 
 	.meta-row {
