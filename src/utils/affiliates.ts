@@ -51,7 +51,7 @@ export const getRealAffiliateLink = (name: string, fallback: string): string => 
     if (cleanName.includes('webmoney')) return 'https://webmoney.ru';
 
     // Brokers & Crypto
-    if (cleanName.includes('binance')) return 'https://binance.com';
+    if (cleanName.includes('binance')) return 'https://www.binance.com/activity/referral-entry/CPA?ref=CPA_0029XHRETF';
     if (cleanName.includes('coinbase')) return 'https://coinbase.com';
     if (cleanName.includes('uphold')) return 'https://uphold.com';
     if (cleanName.includes('webull')) return 'https://webull.com';
